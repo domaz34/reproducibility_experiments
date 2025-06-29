@@ -3,6 +3,7 @@ import platform
 import psutil
 import socket
 
+
 def get_topology_group_prefix(path):
     """
     Extract the directory structure from a topology path (e.g. borg/800/0_1000/DE.json → borg/800/0_1000).
@@ -100,7 +101,7 @@ def parse_input(input_str):
     return result
 
 
-def list_topology_files(root="topologies"):
+def list_files(root):
     """
     Recursively list all topology JSON files under a folder.
 

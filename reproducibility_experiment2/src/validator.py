@@ -118,34 +118,30 @@ def compare_experiment_outputs(orig_path, repr_path):
 
 
 def compare_all_experiments_outputs():
-    """
-    Checks whether all experiment and reproduced output pairs match.
+    pairs = []
 
-    Scans the output directory for folders with names matching:
-    - Original: any name
-    - Reproduced: starts with 'repr_'
+    for parent, dirs, _ in os.walk("output"):
+        for d in dirs:
+            if d.startswith("repr_"):
+                repr_dir = os.path.join(parent, d)
+                orig_dir = os.path.join(parent, d[len("repr_"):])
 
-    Compares matching pairs and prints mismatch or success result.
-    """
-    
-    dirs = [direc for direc in os.listdir("output") if os.path.isdir(f"output/{direc}")]
+                if os.path.isdir(orig_dir):
+                    if not get_parquet_files_recursive(orig_dir) and not get_parquet_files_recursive(repr_dir):
+                        continue
+                    pairs.append((orig_dir, repr_dir))
 
-    experiment_pairs = []
-    repr_dirs = [direc for direc in dirs if direc.startswith("repr_")]
-
-    for repr_dir in repr_dirs:
-        original_dir = repr_dir.replace("repr_", "")
-        if original_dir in dirs:
-            experiment_pairs.append((original_dir, repr_dir))
-
-    if not experiment_pairs:
+    if not pairs:
         print("No experiment pairs found.")
         return
 
-    for orig, repr_ in experiment_pairs:
-        orig_path = f"output/{orig}"
-        repr_path = f"output/{repr_}"
-        if compare_experiment_outputs(orig_path, repr_path) is False:
-            print("Files missmatch")
-            return
-    print("Experiments match")
+    all_ok = True
+    for orig_path, repr_path in pairs:
+        rel = os.path.relpath(orig_path, "output")
+        if not compare_experiment_outputs(orig_path, repr_path):
+            all_ok = False
+
+    if all_ok:
+        print("All experiments match successfully.")
+    else:
+        print("Some experiments did NOT match.")

@@ -1,0 +1,64 @@
+{
+  "name": "experiment_regular",
+  "topologies": [
+    {
+      "pathToFile": "topologies/example_topology.json"
+    }
+  ],
+
+  "workloads": [
+    {
+      "pathToFile": "workload_traces/example_workload",
+      "type": "ComputeWorkload"
+    }
+  ],
+
+  "allocationPolicies": [
+    {
+      "type": "prefab",
+      "policyName": "TaskNumMemorizing"
+    }
+  ],
+
+  "exportModels": [
+    {
+      "exportInterval": 31536000,
+      "printFrequency": 1,
+      "filesToExport": [
+        "service",
+        "powerSource",
+        "battery"
+      ],
+      "computeExportConfig": {
+        "hostExportColumns": [
+          "power_draw",
+          "energy_usage",
+          "cpu_usage",
+          "cpu_utilization",
+          "embodied_carbon"
+        ],
+        "serviceExportColumns": [
+          "tasks_total",
+          "tasks_pending",
+          "tasks_active",
+          "tasks_completed",
+          "tasks_terminated",
+          "hosts_up"
+        ],
+        "taskExportColumns": [
+          "submission_time",
+          "schedule_time",
+          "finish_time",
+          "task_state"
+        ],
+        "powerSourceExportColumns": [
+          "power_draw",
+          "energy_usage",
+          "carbon_intensity",
+          "carbon_emission"
+        ]
+      }
+    }
+  ]
+
+}

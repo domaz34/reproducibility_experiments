@@ -29,6 +29,7 @@ def build_entry(folder, file, original_entry=None, default_type=None):
     return entry
 
 def update_experiment_values(
+    exp_template_path=None,
     experiment_template=None,
     topologies=None,
     workloads=None,
@@ -63,7 +64,7 @@ def update_experiment_values(
 
     if experiment_template:
         try:
-            with open(f"templates/experiments/{experiment_template}", 'r') as f:
+            with open(f"{exp_template_path}{experiment_template}", 'r') as f:
                 base_experiment = json.load(f)
         except Exception as e:
             print(f"Failed to load base experiment: {e}")
@@ -283,7 +284,7 @@ def save_experiment(experiment, new_name):
         experiment: The experiment JSON content.
         new_name: Filename to save as (it can include / characters to have folder structure).
     """
-    new_path = os.path.join("experiments", new_name)
+    new_path = f"experiments/{new_name}"
     os.makedirs(os.path.dirname(new_path), exist_ok=True)
 
     try:

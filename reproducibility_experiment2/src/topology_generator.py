@@ -4,6 +4,7 @@ import json
 
 
 def update_topology_values(
+    topo_template_path=None,
     topology_file=None,
     core_count_list=None, 
     core_speed_list=None, 
@@ -40,7 +41,7 @@ def update_topology_values(
     """
 
     if topology_file:
-        topology_path = f"templates/topologies/{topology_file}"
+        topology_path = f"{topo_template_path}{topology_file}"
         try:
             with open(topology_path, 'r') as f:
                 original_topology = json.load(f)
