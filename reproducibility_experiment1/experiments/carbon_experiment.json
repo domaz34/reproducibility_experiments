@@ -1,0 +1,35 @@
+{
+    "name": "carbon_experiment",
+    "topologies": [
+        {
+            "pathToFile": "topologies/hosts277/carbon-BE_2021-2024/core16_speed2100_mem100000_carbon_topo.json"
+        },
+        {
+            "pathToFile": "topologies/hosts277/carbon-DE_2021-2024/core16_speed2100_mem100000_carbon_topo.json"
+        },
+        {
+            "pathToFile": "topologies/hosts277/carbon-FR_2021-2024/core16_speed2100_mem100000_carbon_topo.json"
+        },
+        {
+            "pathToFile": "topologies/hosts277/carbon-NL_2021-2024/core16_speed2100_mem100000_carbon_topo.json"
+        }
+    ],
+    "workloads": [
+        {
+            "pathToFile": "workload_traces/surf_month",
+            "type": "ComputeWorkload"
+        }
+    ],
+    "exportModels": [
+        {
+            "exportInterval": 3600,
+            "printFrequency": 168,
+            "filesToExport": [
+                "host",
+                "powerSource",
+                "service",
+                "task"
+            ]
+        }
+    ]
+}
